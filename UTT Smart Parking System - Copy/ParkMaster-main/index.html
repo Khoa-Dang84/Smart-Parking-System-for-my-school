@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Parking System</title>
+    <title>Hệ Thống Đỗ Xe Thông Minh</title>
     <style>
         * {
             margin: 0;
@@ -191,52 +191,52 @@
 </head>
 <body>
     <header>
-        <div class="logo">Smart Parking System</div>
+        <div class="logo">Hệ Thống Đỗ Xe Thông Minh</div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="index.html">Trang Chủ</a></li>
+                <li><a href="#features">Tính Năng</a></li>
+                <li><a href="#about">Về Chúng Tôi</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
             </ul>
         </nav>
         <div class="user-info">
             <span id="username"></span>
-            <button class="login-btn" id="loginBtn" onclick="redirectToLogin()">Login</button>
-            <button class="logout-btn" id="logoutBtn" onclick="logout()" style="display:none;">Logout</button>
+            <button class="login-btn" id="loginBtn" onclick="redirectToLogin()">Đăng Nhập</button>
+            <button class="logout-btn" id="logoutBtn" onclick="logout()" style="display:none;">Đăng Xuất</button>
         </div>
     </header>
 
     <div class="hero">
         <div class="content">
-            <h1>Welcome to UTT Smart Parking System</h1>
-            <p>Experience the ease of smart parking with our advanced system.</p>
-            <button class="btn" onclick="checkLoginStatus()">Let's Start</button>
+            <h1>Chào Mừng Đến Với Hệ Thống Đỗ Xe Thông Minh UTT</h1>
+            <p>Trải nghiệm sự tiện lợi của đỗ xe thông minh với hệ thống tiên tiến của chúng tôi.</p>
+            <button class="btn" onclick="checkLoginStatus()">Bắt Đầu Ngay</button>
         </div>
     </div>
 
     <section id="features">
-        <h2>Features</h2>
+        <h2>Tính Năng</h2>
         <ul>
-            <li>Real-time Parking Availability</li>
-            <li>Easy-to-Use Interface</li>
-            <li>Secure and Efficient Parking System</li>
-            <li>Integrated Payment Options</li>
+            <li>Kiểm Tra Tính Khả Dụng Đỗ Xe Theo Thời Thực</li>
+            <li>Giao Diện Dễ Sử Dụng</li>
+            <li>Hệ Thống Đỗ Xe An Toàn và Hiệu Quả</li>
+            <li>Tùy Chọn Thanh Toán Tích Hợp</li>
         </ul>
     </section>
 
     <section id="about">
-        <h2>About Us</h2>
-        <p>Our Smart Parking System is designed to revolutionize the parking experience. With advanced technology and user-friendly features, we aim to reduce parking hassles and save time for everyone.</p>
+        <h2>Về Chúng Tôi</h2>
+        <p>Hệ Thống Đỗ Xe Thông Minh của chúng tôi được thiết kế để cách mạng hóa trải nghiệm đỗ xe. Với công nghệ tiên tiến và các tính năng thân thiện với người dùng, chúng tôi mong muốn giảm bớt những rắc rối khi đỗ xe và tiết kiệm thời gian cho mọi người.</p>
     </section>
 
     <section id="contact">
-        <h2>Contact Us</h2>
+        <h2>Liên Hệ Chúng Tôi</h2>
         <form>
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
+            <input type="text" name="name" placeholder="Tên Của Bạn" required>
+            <input type="email" name="email" placeholder="Email Của Bạn" required>
+            <textarea name="message" rows="5" placeholder="Tin Nhắn Của Bạn" required></textarea>
+            <button type="submit">Gửi Tin Nhắn</button>
         </form>
     </section>
 
@@ -248,7 +248,7 @@
             const usernameDisplay = document.getElementById('username');
             
             if (username) {
-                usernameDisplay.textContent = `Hello, ${username}`;
+                usernameDisplay.textContent = `Xin chào, ${username}`;
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'inline-block';
             } else {
