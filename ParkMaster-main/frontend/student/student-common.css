@@ -6,32 +6,34 @@
 }
 
 :root {
-    --blue: #0d6efd;
-    --dark: #1e3a8a;
-    --deep: #173b83;
-    --soft: #eef4ff;
-    --line: #dbeafe;
+    --blue-main: #0d6efd;
+    --blue-dark: #1e3a8a;
+    --blue-deep: #173b83;
+    --blue-soft: #dbeafe;
+    --blue-bg: #eef4ff;
+    --white: #ffffff;
     --text: #1f2937;
     --muted: #64748b;
     --green: #22c55e;
     --red: #ef4444;
     --orange: #f59e0b;
+    --dark: #1e293b;
 }
 
 body {
-    background: #eef4ff;
+    background: var(--blue-bg);
     color: var(--text);
     min-height: 100vh;
 }
 
 .layout {
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 260px 1fr;
-    min-height: 100vh;
 }
 
 .sidebar {
-    background: var(--deep);
+    background: var(--blue-deep);
     color: white;
     padding: 26px 18px;
 }
@@ -48,7 +50,7 @@ body {
     height: 50px;
     border-radius: 16px;
     background: white;
-    color: var(--deep);
+    color: var(--blue-deep);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +60,7 @@ body {
 
 .brand h2 {
     font-size: 20px;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 
 .brand p {
@@ -92,13 +94,14 @@ body {
     font-weight: 800;
     cursor: pointer;
     margin-bottom: 7px;
+    transition: 0.25s;
 }
 
 .nav a:hover,
 .nav a.active {
-    background: var(--blue);
+    background: var(--blue-main);
     color: white;
-    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.26);
 }
 
 .logout {
@@ -106,6 +109,10 @@ body {
     color: white;
     margin-top: 24px;
     justify-content: center;
+}
+
+.logout:hover {
+    background: #dc2626;
 }
 
 .main {
@@ -119,10 +126,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 22px;
     box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
     position: sticky;
     top: 0;
     z-index: 20;
+}
+
+.topbar-title strong {
+    color: var(--blue-dark);
+    font-size: 20px;
+}
+
+.topbar-title p {
+    color: var(--muted);
+    margin-top: 4px;
+    font-size: 14px;
 }
 
 .profile {
@@ -135,7 +154,7 @@ body {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: var(--blue);
+    background: var(--blue-main);
     color: white;
     display: flex;
     align-items: center;
@@ -145,12 +164,12 @@ body {
 
 .profile strong {
     display: block;
-    color: var(--dark);
+    color: var(--blue-dark);
 }
 
 .profile span {
-    font-size: 13px;
     color: var(--muted);
+    font-size: 13px;
 }
 
 .content {
@@ -163,7 +182,7 @@ body {
 
 .title h1 {
     font-size: 34px;
-    color: var(--dark);
+    color: var(--blue-dark);
     margin-bottom: 8px;
 }
 
@@ -180,9 +199,10 @@ body {
 }
 
 .card,
-.panel {
+.panel,
+.zone-card {
     background: white;
-    border: 1px solid var(--line);
+    border: 1px solid var(--blue-soft);
     border-radius: 22px;
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
 }
@@ -196,7 +216,7 @@ body {
     height: 54px;
     border-radius: 16px;
     background: #e8f1ff;
-    color: var(--blue);
+    color: var(--blue-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -212,7 +232,7 @@ body {
 
 .card strong {
     font-size: 30px;
-    color: var(--dark);
+    color: var(--blue-dark);
     font-weight: 900;
 }
 
@@ -223,7 +243,7 @@ body {
 }
 
 .panel h2 {
-    color: var(--dark);
+    color: var(--blue-dark);
     font-size: 22px;
     margin-bottom: 18px;
 }
@@ -242,11 +262,13 @@ body {
     padding: 0 14px;
     outline: none;
     font-size: 15px;
+    color: #334155;
+    background: white;
 }
 
 .form-grid input:focus,
 .form-grid select:focus {
-    border-color: var(--blue);
+    border-color: var(--blue-main);
     box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
 }
 
@@ -255,14 +277,15 @@ body {
     border-radius: 12px;
     padding: 12px 16px;
     color: white;
-    background: var(--blue);
+    background: var(--blue-main);
     font-weight: 900;
     cursor: pointer;
+    transition: 0.25s;
 }
 
 .btn:hover {
-    opacity: 0.9;
     transform: translateY(-1px);
+    opacity: 0.92;
 }
 
 .btn-green {
@@ -274,7 +297,7 @@ body {
 }
 
 .btn-dark {
-    background: #1e293b;
+    background: var(--dark);
 }
 
 .btn-orange {
@@ -296,7 +319,7 @@ table {
 
 th {
     background: #f1f5ff;
-    color: var(--dark);
+    color: var(--blue-dark);
     text-align: left;
     padding: 14px;
     font-size: 14px;
@@ -346,22 +369,49 @@ tr:hover td {
     background: #f59e0b;
 }
 
+.b-money-plus {
+    background: #16a34a;
+}
+
+.b-money-minus {
+    background: #dc2626;
+}
+
+.badge-empty {
+    background: #22c55e;
+}
+
+.badge-used {
+    background: #ef4444;
+}
+
+.badge-car {
+    background: #2563eb;
+}
+
+.badge-warning {
+    background: #f59e0b;
+}
+
 .zone-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 18px;
+    margin-bottom: 24px;
 }
 
 .zone-card {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: 22px;
     padding: 22px;
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    transition: 0.25s;
+}
+
+.zone-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue-main);
 }
 
 .zone-card h3 {
-    color: var(--dark);
+    color: var(--blue-dark);
     margin-bottom: 8px;
 }
 
@@ -369,6 +419,31 @@ tr:hover td {
     color: var(--muted);
     font-size: 14px;
     margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+.zone-mini {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.zone-mini div {
+    background: #f8fbff;
+    border-radius: 13px;
+    padding: 11px;
+}
+
+.zone-mini span {
+    color: var(--muted);
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.zone-mini strong {
+    color: var(--blue-dark);
+    font-size: 22px;
 }
 
 .progress {
@@ -382,7 +457,7 @@ tr:hover td {
 .progress span {
     display: block;
     height: 100%;
-    background: linear-gradient(90deg, var(--blue), #60a5fa);
+    background: linear-gradient(90deg, var(--blue-main), #60a5fa);
 }
 
 .message {
@@ -391,6 +466,7 @@ tr:hover td {
     border-radius: 14px;
     padding: 13px 15px;
     font-weight: 800;
+    line-height: 1.5;
 }
 
 .success {
@@ -405,16 +481,94 @@ tr:hover td {
     color: #991b1b;
 }
 
+.money-plus {
+    color: #16a34a;
+    font-weight: 900;
+}
+
+.money-minus {
+    color: #dc2626;
+    font-weight: 900;
+}
+
+.money-zero {
+    color: #64748b;
+    font-weight: 900;
+}
+
+.empty-state {
+    padding: 30px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.quick-link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.quick-link {
+    background: white;
+    border: 1px solid var(--blue-soft);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    transition: 0.25s;
+}
+
+.quick-link:hover {
+    transform: translateY(-5px);
+    border-color: var(--blue-main);
+}
+
+.quick-link h3 {
+    color: var(--blue-dark);
+    margin-bottom: 8px;
+}
+
+.quick-link p {
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.note-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e3a8a;
+    border-radius: 16px;
+    padding: 16px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+.warning-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    border-radius: 16px;
+    padding: 16px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
 @media (max-width: 1100px) {
     .layout {
         grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
     }
 
     .cards {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .zone-grid {
+    .zone-grid,
+    .quick-link-grid {
         grid-template-columns: 1fr 1fr;
     }
 }
@@ -434,11 +588,20 @@ tr:hover td {
 
     .cards,
     .form-grid,
-    .zone-grid {
+    .zone-grid,
+    .quick-link-grid {
         grid-template-columns: 1fr;
     }
 
     .title h1 {
         font-size: 28px;
+    }
+
+    .profile {
+        width: 100%;
+    }
+
+    table {
+        min-width: 700px;
     }
 }

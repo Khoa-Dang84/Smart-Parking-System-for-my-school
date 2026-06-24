@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập - Smart UTT Parking</title>
+    <title>Đăng nhập - UTT Smart Parking System</title>
 
     <style>
         * {
@@ -497,7 +497,7 @@
                     <div class="brand">
                         <div class="brand-icon">🅿️</div>
                         <div class="brand-text">
-                            <h2>Smart UTT Parking</h2>
+                            <h2>UTT Smart Parking System</h2>
                             <p>Hệ thống quản lý bãi xe thông minh</p>
                         </div>
                     </div>
@@ -574,11 +574,12 @@
     </main>
 
     <div class="footer-text">
-        © 2026 Smart UTT Parking - Trường Đại học Công nghệ Giao thông Vận tải
+        © 2026 UTT Smart Parking System - Trường Đại học Công nghệ Giao thông Vận tải
     </div>
 
+    <script src="api.js"></script>
+
     <script>
-        const API_BASE_URL = window.location.origin;
         let currentRole = "student";
 
         function selectRole(role, button) {
@@ -642,82 +643,6 @@
             showMessage("Vui lòng liên hệ Admin để được cấp tài khoản sử dụng hệ thống.");
         }
 
-        function saveLoginSession(user) {
-            const normalizedUser = {
-                id: user.id || "",
-                username: user.username || "",
-                fullName: user.full_name || user.fullName || user.name || "",
-                full_name: user.full_name || user.fullName || user.name || "",
-                role: user.role || currentRole,
-                studentCode: user.student_code || user.studentCode || user.username || "",
-                student_code: user.student_code || user.studentCode || user.username || "",
-                balance: user.balance || 0,
-                loginAt: new Date().toISOString()
-            };
-
-            /*
-                Lưu nhiều key để các file cũ/mới trong dự án đều đọc được.
-                admin-dashboard.html đang gọi requireRole(["admin"]) từ auth.js,
-                nên cần có thông tin role trong localStorage trước khi vào trang admin.
-            */
-            localStorage.setItem("smart_utt_current_user", JSON.stringify(normalizedUser));
-            localStorage.setItem("currentUser", JSON.stringify(normalizedUser));
-            localStorage.setItem("utt_current_user", JSON.stringify(normalizedUser));
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userRole", normalizedUser.role);
-        }
-
-        async function loginWithBackend(username, password) {
-            const response = await fetch(API_BASE_URL + "/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                    role: currentRole
-                })
-            });
-
-            const result = await response.json().catch(function () {
-                return {
-                    success: false,
-                    message: "Backend trả về dữ liệu không hợp lệ."
-                };
-            });
-
-            if (!response.ok || !result.success) {
-                throw new Error(result.message || "Sai tài khoản hoặc mật khẩu.");
-            }
-
-            const user = result.user || {};
-
-            if (user.role && user.role !== currentRole) {
-                if (user.role === "admin") {
-                    throw new Error("Tài khoản này là Admin. Vui lòng chọn tab Admin để đăng nhập.");
-                }
-
-                if (user.role === "student") {
-                    throw new Error("Tài khoản này là Sinh viên. Vui lòng chọn tab Sinh viên để đăng nhập.");
-                }
-
-                throw new Error("Vai trò tài khoản không khớp với lựa chọn đăng nhập.");
-            }
-
-            saveLoginSession(user);
-
-            return user;
-        }
-
-        function redirectAfterLogin(user) {
-            if (user.role === "admin") {
-                window.location.href = "admin-dashboard.html";
-            } else {
-                window.location.href = "student/student-home.html";
-            }
-        }
-
         document.getElementById("loginForm").addEventListener("submit", async function (event) {
             event.preventDefault();
 
@@ -730,17 +655,16 @@
                 return;
             }
 
+            if (typeof loginUser !== "function") {
+                showMessage("Không tìm thấy file api.js. Vui lòng kiểm tra file frontend/api.js.");
+                return;
+            }
+
             try {
                 loginButton.disabled = true;
                 loginButton.textContent = "ĐANG ĐĂNG NHẬP...";
 
-                const user = await loginWithBackend(username, password);
-
-                showMessage("Đăng nhập thành công. Đang chuyển trang...", "success");
-
-                setTimeout(function () {
-                    redirectAfterLogin(user);
-                }, 400);
+                await loginUser(username, password, currentRole);
             } catch (error) {
                 showMessage(error.message || "Đăng nhập không thành công.");
             } finally {

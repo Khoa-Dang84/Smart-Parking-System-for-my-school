@@ -2,10 +2,10 @@
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xe của tôi - Smart UTT Parking</title>
-    <link rel="stylesheet" href="student-common.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xe của tôi - UTT Smart Parking System</title>
+    <link rel="stylesheet" href="student-common.css" />
 </head>
 
 <body>
@@ -14,16 +14,17 @@
             <div class="brand">
                 <div class="brand-icon">🅿️</div>
                 <div>
-                    <h2>Smart UTT Parking</h2>
+                    <h2>UTT Smart Parking System</h2>
                     <p>Cổng sinh viên</p>
                 </div>
             </div>
 
             <div class="nav">
                 <div class="nav-title">Sinh viên</div>
+
                 <a href="student-home.html">🏠 Trang chủ</a>
                 <a class="active" href="student-vehicles.html">🚗 Xe của tôi</a>
-                <a href="student-wallet.html">💰 Ví/Nạp tiền</a>
+                <a href="student-wallet.html">💰 Ví / Nạp tiền</a>
                 <a href="student-parking.html">🅿️ Bãi xe</a>
                 <a href="student-history.html">📜 Lịch sử</a>
 
@@ -33,9 +34,9 @@
 
         <main class="main">
             <header class="topbar">
-                <div>
-                    <strong style="color:#1e3a8a;font-size:20px">Xe của tôi</strong>
-                    <p style="color:#64748b;margin-top:4px">Quản lý thông tin phương tiện cá nhân</p>
+                <div class="topbar-title">
+                    <strong>Xe của tôi</strong>
+                    <p>Khai báo phương tiện cá nhân để sử dụng bãi xe</p>
                 </div>
 
                 <div class="profile">
@@ -51,8 +52,8 @@
                 <div class="title">
                     <h1>Xe của tôi</h1>
                     <p>
-                        Trang này dùng để khai báo và theo dõi phương tiện cá nhân.
-                        Trạng thái gửi xe sẽ được đồng bộ với dữ liệu bãi xe và trang quản trị.
+                        Sinh viên khai báo xe tại đây. Trang bãi xe sẽ chỉ cho chọn các xe đã khai báo,
+                        giúp dữ liệu gửi xe chặt chẽ và đồng bộ với admin.
                     </p>
                 </div>
 
@@ -86,7 +87,7 @@
                     <h2>Khai báo thêm xe</h2>
 
                     <div class="form-grid">
-                        <input id="plate" type="text" placeholder="Biển số xe, ví dụ 29X1-12345">
+                        <input id="plate" type="text" placeholder="Biển số xe, ví dụ 29X1-12345" />
 
                         <select id="vehicleType">
                             <option value="Xe máy">Xe máy</option>
@@ -94,9 +95,9 @@
                             <option value="Ô tô">Ô tô</option>
                         </select>
 
-                        <input id="brand" type="text" placeholder="Hãng xe, ví dụ Honda, Yamaha, VinFast">
+                        <input id="brand" type="text" placeholder="Hãng xe, ví dụ Honda, Yamaha, VinFast" />
 
-                        <input id="color" type="text" placeholder="Màu xe, ví dụ Đen, Trắng, Xanh">
+                        <input id="color" type="text" placeholder="Màu xe, ví dụ Đen, Trắng, Đỏ" />
                     </div>
 
                     <div class="actions">
@@ -104,7 +105,7 @@
                         <button class="btn btn-dark" onclick="loadVehicles()">Tải lại dữ liệu</button>
                     </div>
 
-                    <div id="msg" class="message"></div>
+                    <div id="vehicleMsg" class="message"></div>
                 </div>
 
                 <div class="panel">
@@ -113,21 +114,24 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Biển số</th>
                                 <th>Mã ô</th>
                                 <th>Khu vực</th>
-                                <th>Biển số</th>
                                 <th>Loại xe</th>
-                                <th>Trạng thái</th>
                                 <th>Cập nhật</th>
                             </tr>
                         </thead>
 
-                        <tbody id="activeParkingTable"></tbody>
+                        <tbody id="activeParkingTable">
+                            <tr>
+                                <td colspan="5">Đang tải dữ liệu...</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
 
                 <div class="panel">
-                    <h2>Danh sách phương tiện đã khai báo</h2>
+                    <h2>Danh sách xe đã khai báo</h2>
 
                     <table>
                         <thead>
@@ -137,12 +141,16 @@
                                 <th>Hãng xe</th>
                                 <th>Màu xe</th>
                                 <th>Mặc định</th>
-                                <th>Trạng thái gửi xe</th>
+                                <th>Trạng thái</th>
                                 <th>Thao tác</th>
                             </tr>
                         </thead>
 
-                        <tbody id="vehicleTable"></tbody>
+                        <tbody id="vehicleTable">
+                            <tr>
+                                <td colspan="7">Đang tải dữ liệu...</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -159,36 +167,38 @@
             loadVehicles();
         }
 
-        async function apiDelete(path) {
-            const response = await fetch("/api" + path, {
-                method: "DELETE"
-            });
-
-            const data = await response.json();
-
-            if (!response.ok || data.success === false) {
-                throw new Error(data.message || "Yêu cầu không thành công");
-            }
-
-            return data;
-        }
-
         async function loadVehicles() {
             try {
-                const data = await apiGet("/student/vehicles?student_code=" + encodeURIComponent(currentUser.studentCode));
+                clearMsg("vehicleMsg");
+
+                const data = await apiGet(
+                    "/student/vehicles?student_code=" + encodeURIComponent(currentUser.studentCode)
+                );
 
                 vehicles = data.vehicles || [];
                 activeParking = data.activeParking || [];
 
-                renderSummary();
-                renderActiveParking();
-                renderVehicles();
+                updateSummary();
+                renderActiveParkingTable();
+                renderVehicleTable();
             } catch (error) {
-                showMsg("msg", error.message, false);
+                showMsg("vehicleMsg", error.message, false);
+
+                document.getElementById("activeParkingTable").innerHTML = `
+                    <tr>
+                        <td colspan="5">${error.message}</td>
+                    </tr>
+                `;
+
+                document.getElementById("vehicleTable").innerHTML = `
+                    <tr>
+                        <td colspan="7">${error.message}</td>
+                    </tr>
+                `;
             }
         }
 
-        function renderSummary() {
+        function updateSummary() {
             const bikeCount = vehicles.filter(function (vehicle) {
                 return vehicle.vehicle_type === "Xe máy" || vehicle.vehicle_type === "Xe điện";
             }).length;
@@ -203,49 +213,36 @@
             document.getElementById("parkingCount").textContent = activeParking.length;
         }
 
-        function getParkingBadge(status) {
-            if (status === "warning") {
-                return '<span class="badge b-warning">Cần kiểm tra</span>';
-            }
+        function renderActiveParkingTable() {
+            const table = document.getElementById("activeParkingTable");
 
-            if (status === "car" || status === "used") {
-                return '<span class="badge b-used">Đang gửi</span>';
-            }
-
-            return '<span class="badge b-empty">Chưa gửi</span>';
-        }
-
-        function renderActiveParking() {
-            const tbody = document.getElementById("activeParkingTable");
-
-            if (!activeParking.length) {
-                tbody.innerHTML = `
+            if (!activeParking || activeParking.length === 0) {
+                table.innerHTML = `
                     <tr>
-                        <td colspan="6">Hiện chưa có xe nào của bạn đang gửi trong bãi.</td>
+                        <td colspan="5">Hiện chưa có xe nào của bạn đang gửi trong bãi.</td>
                     </tr>
                 `;
                 return;
             }
 
-            tbody.innerHTML = activeParking.map(function (item) {
+            table.innerHTML = activeParking.map(function (item) {
                 return `
                     <tr>
-                        <td>${item.slot_code || "---"}</td>
-                        <td>${item.zone_name || "---"}</td>
                         <td><strong>${item.plate || "---"}</strong></td>
-                        <td>${item.vehicle_type || "---"}</td>
-                        <td>${getParkingBadge(item.status)}</td>
-                        <td>${item.updated_at || "---"}</td>
+                        <td>${item.slot_code || item.slotCode || "---"}</td>
+                        <td>${item.zone_name || item.zoneName || "---"}</td>
+                        <td>${item.vehicle_type || item.vehicleType || "---"}</td>
+                        <td>${formatDateTime(item.updated_at || item.updatedAt)}</td>
                     </tr>
                 `;
             }).join("");
         }
 
-        function renderVehicles() {
-            const tbody = document.getElementById("vehicleTable");
+        function renderVehicleTable() {
+            const table = document.getElementById("vehicleTable");
 
-            if (!vehicles.length) {
-                tbody.innerHTML = `
+            if (!vehicles || vehicles.length === 0) {
+                table.innerHTML = `
                     <tr>
                         <td colspan="7">Bạn chưa khai báo phương tiện nào.</td>
                     </tr>
@@ -253,28 +250,41 @@
                 return;
             }
 
-            tbody.innerHTML = vehicles.map(function (vehicle) {
-                const defaultText = Number(vehicle.is_default) === 1
-                    ? '<span class="badge b-empty">Mặc định</span>'
-                    : '<button class="btn btn-blue" onclick="setDefaultVehicle(' + vehicle.id + ')">Đặt mặc định</button>';
-
-                const parkingText = vehicle.isParking
-                    ? '<span class="badge b-used">Đang gửi trong bãi</span>'
-                    : '<span class="badge b-empty">Chưa gửi</span>';
-
-                const deleteButton = vehicle.isParking
-                    ? '<button class="btn btn-dark" disabled>Đang gửi</button>'
-                    : '<button class="btn btn-red" onclick="deleteVehicle(' + vehicle.id + ')">Xóa</button>';
+            table.innerHTML = vehicles.map(function (vehicle) {
+                const isParking = vehicle.isParking === true;
+                const isDefault = Number(vehicle.is_default || vehicle.isDefault || 0) === 1;
 
                 return `
                     <tr>
-                        <td><strong>${vehicle.plate || "---"}</strong></td>
+                        <td><strong>${vehicle.plate}</strong></td>
                         <td>${vehicle.vehicle_type || "---"}</td>
                         <td>${vehicle.brand || "---"}</td>
                         <td>${vehicle.color || "---"}</td>
-                        <td>${defaultText}</td>
-                        <td>${parkingText}</td>
-                        <td>${deleteButton}</td>
+                        <td>
+                            ${isDefault
+                        ? '<span class="badge b-empty">Mặc định</span>'
+                        : "---"
+                    }
+                        </td>
+                        <td>
+                            ${isParking
+                        ? '<span class="badge b-used">Đang gửi</span>'
+                        : '<span class="badge b-empty">Chưa gửi</span>'
+                    }
+                        </td>
+                        <td>
+                            <div class="actions" style="margin-top:0;">
+                                ${isDefault
+                        ? ""
+                        : `<button class="btn btn-dark" onclick="setDefaultVehicle(${vehicle.id})">Đặt mặc định</button>`
+                    }
+
+                                ${isParking
+                        ? ""
+                        : `<button class="btn btn-red" onclick="deleteVehicle(${vehicle.id})">Xóa</button>`
+                    }
+                            </div>
+                        </td>
                     </tr>
                 `;
             }).join("");
@@ -287,7 +297,7 @@
             const color = document.getElementById("color").value.trim();
 
             if (!plate) {
-                showMsg("msg", "Vui lòng nhập biển số xe.", false);
+                showMsg("vehicleMsg", "Vui lòng nhập biển số xe.", false);
                 return;
             }
 
@@ -300,7 +310,7 @@
                     color: color
                 });
 
-                showMsg("msg", data.message || "Đã khai báo xe thành công", true);
+                showMsg("vehicleMsg", data.message || "Đã khai báo xe thành công.", true);
 
                 document.getElementById("plate").value = "";
                 document.getElementById("brand").value = "";
@@ -308,39 +318,42 @@
 
                 await loadVehicles();
             } catch (error) {
-                showMsg("msg", error.message, false);
+                showMsg("vehicleMsg", error.message, false);
             }
         }
 
         async function deleteVehicle(vehicleId) {
-            const confirmDelete = confirm("Bạn có chắc chắn muốn xóa xe này không?");
+            const confirmDelete = confirm("Bạn có chắc muốn xóa xe này khỏi danh sách không?");
 
             if (!confirmDelete) {
                 return;
             }
 
             try {
-                const data = await apiDelete("/student/vehicles/" + vehicleId + "?student_code=" + encodeURIComponent(currentUser.studentCode));
+                const data = await apiDelete(
+                    "/student/vehicles/" + vehicleId + "?student_code=" + encodeURIComponent(currentUser.studentCode)
+                );
 
-                showMsg("msg", data.message || "Đã xóa xe khỏi danh sách", true);
-
+                showMsg("vehicleMsg", data.message || "Đã xóa xe.", true);
                 await loadVehicles();
             } catch (error) {
-                showMsg("msg", error.message, false);
+                showMsg("vehicleMsg", error.message, false);
             }
         }
 
         async function setDefaultVehicle(vehicleId) {
             try {
-                const data = await apiPost("/student/vehicles/" + vehicleId + "/default", {
-                    studentCode: currentUser.studentCode
-                });
+                const data = await apiPost(
+                    "/student/vehicles/" + vehicleId + "/default",
+                    {
+                        studentCode: currentUser.studentCode
+                    }
+                );
 
-                showMsg("msg", data.message || "Đã đặt làm xe mặc định", true);
-
+                showMsg("vehicleMsg", data.message || "Đã đặt làm xe mặc định.", true);
                 await loadVehicles();
             } catch (error) {
-                showMsg("msg", error.message, false);
+                showMsg("vehicleMsg", error.message, false);
             }
         }
     </script>
