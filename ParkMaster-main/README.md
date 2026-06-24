@@ -1,3 +1,7 @@
 # UTT Smart Parking System
 UTT Smart Parking System  được thiết kế để tổ chức và tối ưu hóa các không gian đỗ xe hiệu quả. Nó theo dõi chỗ đỗ có sẵn, quản lý phân công xe, và hiển thị trạng thái đỗ xe real-time.
-C:\Users\asus\Downloads\Bản vá thứ 3 cho dự án\Smart-Parking-System-for-my-school-main\ParkMaster-main
+
+Smart UTT Parking System là dự án xây dựng website quản lý bãi xe dành cho sinh viên và bộ phận quản trị trong trường học. Dự án tập trung vào một vấn đề thực tế: hoạt động gửi xe trong trường thường có nhiều dữ liệu cần quản lý như thông tin sinh viên, phương tiện, khu gửi xe, ô gửi xe, phí gửi xe và lịch sử ra vào bãi.
+Trong phiên bản hiện tại, hệ thống cho phép sinh viên đăng nhập, quản lý xe cá nhân, nạp tiền vào ví, gửi xe, lấy xe và xem lịch sử giao dịch. Ở phía quản trị, admin có thể theo dõi tổng quan bãi xe, xem số ô trống, số xe đang gửi, danh sách xe trong bãi, thông tin sinh viên sở hữu xe và vị trí xe đang được gửi.
+Dự án được triển khai theo mô hình website gồm frontend, backend và database. Frontend sử dụng HTML, CSS, JavaScript để xây dựng giao diện. Backend sử dụng Flask để xử lý API. Database sử dụng SQLite để lưu thông tin người dùng, xe sinh viên, khu gửi xe, ô gửi xe và lịch sử giao dịch.
+Điểm quan trọng của dự án là các chức năng được kết nối thành một luồng thống nhất. Khi sinh viên gửi xe, hệ thống tự động kiểm tra xe đã khai báo, chọn khu gửi xe phù hợp, trừ phí trong ví, cập nhật trạng thái ô gửi xe và ghi nhận lịch sử. Dữ liệu này đồng thời được hiển thị ở trang admin, giúp người quản lý theo dõi tình trạng bãi xe một cách trực quan hơn.
