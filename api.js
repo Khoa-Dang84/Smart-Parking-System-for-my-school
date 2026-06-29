@@ -1,6 +1,6 @@
 
 
-const SUPABASE_URL = "https://znqtskbjbvayrqipamqa.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://znqtskbjbvayrqipamqa.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_0MyC0DLeoH12tQ4g5mWulg_w3CqSOyJ";
 const SUPABASE_CDN = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
 
