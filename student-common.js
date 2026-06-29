@@ -303,3 +303,74 @@ function downloadCSV(filename, headers, rows) {
 
     URL.revokeObjectURL(url);
 }
+/* ============================================================
+   FIX STUDENT COMMON - KHÔNG GỌI FLASK /api NỮA
+   Dán đoạn này vào cuối file student-common.js
+============================================================ */
+
+function loadSmartUttApi() {
+  return new Promise((resolve, reject) => {
+    if (window.smartUttApiGet && window.smartUttApiPost && window.smartUttApiDelete) {
+      resolve();
+      return;
+    }
+
+    const oldScript = document.querySelector('script[data-smart-utt-api-fix]');
+    if (oldScript) {
+      oldScript.addEventListener("load", resolve);
+      oldScript.addEventListener("error", reject);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "api.js?v=" + Date.now();
+    script.setAttribute("data-smart-utt-api-fix", "true");
+    script.onload = resolve;
+    script.onerror = () => reject(new Error("Không tải được api.js"));
+    document.head.appendChild(script);
+  });
+}
+
+apiGet = async function (path) {
+  await loadSmartUttApi();
+
+  if (window.smartUttApiGet) {
+    return await window.smartUttApiGet(path);
+  }
+
+  if (window.apiGet && window.apiGet !== apiGet) {
+    return await window.apiGet(path);
+  }
+
+  throw new Error("Supabase API chưa sẵn sàng. Kiểm tra api.js.");
+};
+
+apiPost = async function (path, body = {}) {
+  await loadSmartUttApi();
+
+  if (window.smartUttApiPost) {
+    return await window.smartUttApiPost(path, body);
+  }
+
+  if (window.apiPost && window.apiPost !== apiPost) {
+    return await window.apiPost(path, body);
+  }
+
+  throw new Error("Supabase API chưa sẵn sàng. Kiểm tra api.js.");
+};
+
+apiDelete = async function (path) {
+  await loadSmartUttApi();
+
+  if (window.smartUttApiDelete) {
+    return await window.smartUttApiDelete(path);
+  }
+
+  if (window.apiDelete && window.apiDelete !== apiDelete) {
+    return await window.apiDelete(path);
+  }
+
+  throw new Error("Supabase API chưa sẵn sàng. Kiểm tra api.js.");
+};
+
+console.log("✅ student-common.js đã chuyển sang dùng Supabase API");
