@@ -805,3 +805,6 @@ window.getCurrentUser = getCurrentUser;
 window.saveLoginSession = saveLoginSession;
 window.requireAuth = requireAuth;
 window.logout = logout;
+window.smartUttApiGet = apiGet;
+window.smartUttApiPost = apiPost;
+window.smartUttApiDelete = apiDelete;
