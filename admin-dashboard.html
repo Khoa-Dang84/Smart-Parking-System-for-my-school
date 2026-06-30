@@ -8,42 +8,44 @@
 
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: "Segoe UI", Arial, sans-serif;
         }
 
         body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
             background: #eef4ff;
-            color: #1f2937;
+            color: #1e293b;
         }
 
         .layout {
+            display: flex;
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 280px 1fr;
         }
 
         .sidebar {
-            background: #173b83;
+            width: 310px;
+            background: #173f8f;
             color: white;
-            padding: 26px 20px;
+            padding: 20px 22px;
+            position: fixed;
+            inset: 0 auto 0 0;
+            overflow-y: auto;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 34px;
+            gap: 14px;
+            margin-bottom: 36px;
         }
 
         .brand-icon {
-            width: 52px;
-            height: 52px;
+            width: 54px;
+            height: 54px;
             border-radius: 16px;
-            background: white;
-            color: #173b83;
+            background: #eaf2ff;
+            color: #1d6ff2;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -52,361 +54,260 @@
         }
 
         .brand h2 {
-            font-size: 21px;
+            margin: 0;
+            font-size: 24px;
             line-height: 1.2;
+            font-weight: 900;
         }
 
         .brand p {
-            font-size: 13px;
-            color: #dbeafe;
-            margin-top: 4px;
+            margin: 7px 0 0;
+            opacity: 0.9;
+            font-size: 15px;
         }
 
-        .menu-title {
-            margin: 22px 0 12px 12px;
-            font-size: 13px;
-            color: #bfdbfe;
+        .nav-title {
             text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 0.7px;
+            letter-spacing: 2px;
+            font-size: 13px;
+            font-weight: 900;
+            opacity: 0.82;
+            margin: 28px 0 12px;
         }
 
-        .menu-item {
+        .nav a,
+        .nav button {
             width: 100%;
-            border: none;
-            background: transparent;
-            color: #dbeafe;
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 14px 15px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-bottom: 8px;
-            text-align: left;
-            transition: 0.25s;
-        }
-
-        .menu-item:hover,
-        .menu-item.active {
-            background: #0d6efd;
+            padding: 16px 18px;
+            border-radius: 16px;
             color: white;
-            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.26);
-        }
-
-        .logout-btn {
-            width: 100%;
-            margin-top: 25px;
-            border: none;
-            background: #ef4444;
-            color: white;
-            padding: 14px;
-            border-radius: 14px;
+            text-decoration: none;
             font-weight: 900;
+            font-size: 17px;
+            margin-bottom: 10px;
+            transition: 0.2s;
+            background: transparent;
+            border: none;
             cursor: pointer;
+            text-align: left;
+        }
+
+        .nav a:hover,
+        .nav button:hover,
+        .nav a.active {
+            background: #1674f6;
+            transform: translateX(3px);
+        }
+
+        .logout {
+            margin-top: 30px !important;
+            background: #ef4444 !important;
+            justify-content: center;
+            text-align: center !important;
         }
 
         .main {
-            min-width: 0;
+            margin-left: 310px;
+            width: calc(100% - 310px);
+            padding: 28px 34px 44px;
         }
 
         .topbar {
-            height: 86px;
+            height: 74px;
             background: white;
+            border-radius: 0 0 24px 24px;
+            margin: -28px -34px 34px;
             padding: 0 34px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 22px;
-            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
-            position: sticky;
-            top: 0;
-            z-index: 20;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
         }
 
-        .search-box {
-            width: 520px;
-            max-width: 55vw;
-            height: 48px;
-            border-radius: 999px;
-            background: #f1f5ff;
+        .search {
             display: flex;
             align-items: center;
-            overflow: hidden;
+            max-width: 620px;
+            width: 100%;
+        }
+
+        .search input {
+            width: 100%;
+            height: 52px;
             border: 1px solid #dbeafe;
-        }
-
-        .search-box input {
-            flex: 1;
-            height: 100%;
-            border: none;
+            background: #f3f7ff;
+            border-radius: 999px 0 0 999px;
+            padding: 0 22px;
+            font-size: 16px;
+            font-weight: 700;
             outline: none;
-            background: transparent;
-            padding: 0 18px;
-            font-size: 15px;
-            color: #334155;
         }
 
-        .search-box button {
-            width: 70px;
-            height: 100%;
+        .search button {
+            width: 86px;
+            height: 52px;
             border: none;
-            background: #0d6efd;
+            background: #1674f6;
             color: white;
-            font-size: 18px;
+            border-radius: 0 999px 999px 0;
+            font-size: 20px;
             cursor: pointer;
         }
 
-        .admin-profile {
+        .profile {
             display: flex;
             align-items: center;
-            gap: 13px;
+            gap: 14px;
         }
 
-        .admin-avatar {
-            width: 46px;
-            height: 46px;
+        .avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: #0d6efd;
+            background: #1674f6;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
+            font-size: 20px;
         }
 
-        .admin-profile strong {
+        .profile strong {
             color: #1e3a8a;
             display: block;
+            font-size: 17px;
         }
 
-        .admin-profile span {
+        .profile span {
             color: #64748b;
-            font-size: 13px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .content {
-            padding: 34px;
+        .title {
+            margin-bottom: 28px;
         }
 
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-        }
-
-        .page-title {
-            margin-bottom: 26px;
-        }
-
-        .page-title h1 {
+        .title h1 {
+            margin: 0;
+            font-size: 42px;
             color: #1e3a8a;
-            font-size: 34px;
-            margin-bottom: 8px;
+            font-weight: 950;
         }
 
-        .page-title p {
+        .title p {
             color: #64748b;
-            font-size: 16px;
+            font-size: 17px;
+            font-weight: 600;
             line-height: 1.6;
         }
 
-        .stats-grid {
+        .cards {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, minmax(190px, 1fr));
             gap: 22px;
-            margin-bottom: 28px;
+            margin-bottom: 30px;
         }
 
-        .stat-card {
+        .card {
             background: white;
-            border-radius: 22px;
-            padding: 24px;
-            border: 1px solid #dbeafe;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.08);
         }
 
-        .stat-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: #e8f1ff;
-            color: #0d6efd;
+        .icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: #eaf2ff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
-            margin-bottom: 16px;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
 
-        .stat-card h3 {
+        .card h3 {
+            margin: 0 0 10px;
             color: #64748b;
-            font-size: 15px;
-            margin-bottom: 8px;
-        }
-
-        .stat-card strong {
-            color: #1e3a8a;
-            font-size: 30px;
             font-weight: 900;
+            font-size: 16px;
         }
 
-        .grid-two {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 28px;
+        .card strong {
+            color: #1e3a8a;
+            font-size: 38px;
+            font-weight: 950;
         }
 
         .panel {
             background: white;
-            border-radius: 22px;
-            padding: 26px;
-            border: 1px solid #dbeafe;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
-            overflow-x: auto;
+            border-radius: 24px;
+            padding: 28px;
             margin-bottom: 28px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.08);
+        }
+
+        .panel-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 20px;
         }
 
         .panel h2 {
+            margin: 0;
             color: #1e3a8a;
-            font-size: 23px;
-            margin-bottom: 18px;
+            font-size: 28px;
+            font-weight: 950;
         }
 
-        .zone-cards {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-        .zone-card {
-            background: white;
-            border-radius: 22px;
-            padding: 22px;
-            border: 1px solid #dbeafe;
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
-            transition: 0.25s;
-        }
-
-        .zone-card:hover {
-            transform: translateY(-5px);
-            border-color: #0d6efd;
-        }
-
-        .zone-card h3 {
-            color: #1e3a8a;
-            font-size: 18px;
-            margin-bottom: 6px;
-        }
-
-        .zone-card p {
+        .panel p {
             color: #64748b;
-            font-size: 14px;
-            margin-bottom: 14px;
-            line-height: 1.5;
+            font-weight: 600;
+            line-height: 1.6;
         }
 
-        .zone-mini {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .zone-mini div {
-            background: #f8fbff;
-            border-radius: 13px;
-            padding: 11px;
-        }
-
-        .zone-mini span {
-            color: #64748b;
-            display: block;
-            font-size: 12px;
-            margin-bottom: 4px;
-        }
-
-        .zone-mini strong {
-            color: #1e3a8a;
-            font-size: 22px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 820px;
-        }
-
-        th {
-            background: #f1f5ff;
-            color: #1e3a8a;
-            padding: 14px;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        td {
-            padding: 14px;
-            border-bottom: 1px solid #e5e7eb;
-            color: #334155;
-            font-size: 14px;
-        }
-
-        tr:hover td {
-            background: #f8fbff;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 11px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 900;
-            color: white;
-        }
-
-        .badge-empty {
-            background: #22c55e;
-        }
-
-        .badge-used {
-            background: #ef4444;
-        }
-
-        .badge-car {
-            background: #2563eb;
-        }
-
-        .badge-warning {
-            background: #f59e0b;
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .btn {
             border: none;
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 14px 20px;
+            border-radius: 14px;
             color: white;
+            font-size: 15px;
             font-weight: 900;
             cursor: pointer;
-            transition: 0.25s;
+            transition: 0.2s;
         }
 
         .btn:hover {
-            transform: translateY(-1px);
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
         }
 
         .btn-blue {
-            background: #0d6efd;
+            background: #1674f6;
+        }
+
+        .btn-dark {
+            background: #111827;
         }
 
         .btn-green {
-            background: #22c55e;
+            background: #16a34a;
         }
 
         .btn-orange {
@@ -417,218 +318,262 @@
             background: #ef4444;
         }
 
-        .btn-dark {
-            background: #1e293b;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .form-grid input,
-        .form-grid select {
-            height: 48px;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 0 14px;
-            outline: none;
-            font-size: 15px;
-        }
-
-        .form-grid input:focus,
-        .form-grid select:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
-        }
-
-        .action-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .alert-list {
-            display: grid;
-            gap: 16px;
-        }
-
-        .alert-card {
-            background: white;
-            border-radius: 18px;
-            padding: 20px;
-            border-left: 7px solid #f59e0b;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .alert-card h3 {
-            color: #1e3a8a;
-            margin-bottom: 6px;
-        }
-
-        .alert-card p {
-            color: #64748b;
-            line-height: 1.5;
-        }
-
-        .detail-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.55);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            padding: 22px;
-        }
-
-        .detail-modal.active {
-            display: flex;
-        }
-
-        .detail-box {
-            width: min(760px, 100%);
-            background: white;
-            border-radius: 28px;
-            padding: 28px;
-            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.28);
-            max-height: 88vh;
-            overflow-y: auto;
-        }
-
-        .detail-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 22px;
-        }
-
-        .detail-head h2 {
-            color: #1e3a8a;
-            font-size: 26px;
-            margin-bottom: 6px;
-        }
-
-        .detail-head p {
-            color: #64748b;
-            line-height: 1.5;
-        }
-
-        .detail-close {
-            border: none;
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            background: #fee2e2;
-            color: #991b1b;
-            font-size: 20px;
-            font-weight: 900;
-            cursor: pointer;
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
-        .detail-item {
-            background: #f8fbff;
-            border: 1px solid #dbeafe;
-            border-radius: 18px;
-            padding: 16px;
-        }
-
-        .detail-item span {
-            display: block;
-            color: #64748b;
-            font-size: 13px;
-            font-weight: 800;
-            margin-bottom: 7px;
-        }
-
-        .detail-item strong {
-            color: #1e3a8a;
-            font-size: 17px;
-            word-break: break-word;
-        }
-
-        .detail-item.full {
-            grid-column: 1 / -1;
-        }
-
-        @media (max-width: 760px) {
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .detail-item.full {
-                grid-column: auto;
-            }
-        }
-
         .message {
-            display: none;
-            margin-top: 14px;
+            padding: 14px 16px;
             border-radius: 14px;
-            padding: 13px 15px;
-            font-weight: 800;
-            line-height: 1.5;
+            font-weight: 900;
+            margin-bottom: 18px;
+            display: none;
         }
 
-        .success {
+        .message.success {
             display: block;
             background: #dcfce7;
             color: #166534;
         }
 
-        .error {
+        .message.error {
             display: block;
             background: #fee2e2;
             color: #991b1b;
         }
 
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 980px;
+        }
+
+        th {
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 16px;
+            text-align: left;
+            font-weight: 950;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 16px;
+            border-top: 1px solid #e2e8f0;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 13px;
+        }
+
+        .badge-used {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-car {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-empty {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-warning {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .zone-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .zone-card {
+            background: #f8fafc;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zone-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: #1674f6;
+        }
+
+        .zone-card h3 {
+            margin: 0 0 14px;
+            color: #1e3a8a;
+            font-size: 20px;
+            font-weight: 950;
+        }
+
+        .zone-card p {
+            margin: 8px 0;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        .progress {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 14px 0;
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #1674f6);
+            border-radius: 999px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 54px;
+            border: 1px solid #cbd5e1;
+            border-radius: 14px;
+            padding: 0 16px;
+            font-size: 15px;
+            font-weight: 700;
+            outline: none;
+            background: white;
+            color: #334155;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1674f6;
+            box-shadow: 0 0 0 4px rgba(22, 116, 246, 0.12);
+        }
+
+        .detail-box {
+            background: #f8fafc;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 18px;
+            margin-top: 18px;
+            display: none;
+        }
+
+        .detail-box.show {
+            display: block;
+        }
+
+        .detail-box h3 {
+            margin: 0 0 12px;
+            color: #1e3a8a;
+            font-size: 22px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .detail-item {
+            background: white;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .detail-item span {
+            display: block;
+            color: #64748b;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .detail-item strong {
+            color: #1e3a8a;
+        }
+
         @media (max-width: 1200px) {
-            .layout {
-                grid-template-columns: 1fr;
+            .sidebar {
+                width: 260px;
             }
 
-            .stats-grid,
-            .zone-cards,
-            .grid-two {
+            .main {
+                margin-left: 260px;
+                width: calc(100% - 260px);
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .zone-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 760px) {
-            .topbar {
-                height: auto;
-                padding: 20px;
-                flex-direction: column;
-                align-items: stretch;
+            .layout {
+                display: block;
             }
 
-            .search-box {
+            .sidebar {
+                position: relative;
                 width: 100%;
-                max-width: none;
+                bottom: auto;
             }
 
-            .content {
+            .main {
+                margin-left: 0;
+                width: 100%;
                 padding: 22px;
             }
 
-            .stats-grid,
-            .zone-cards,
-            .grid-two,
-            .form-grid {
+            .topbar {
+                margin: -22px -22px 24px;
+                border-radius: 0 0 22px 22px;
+                flex-direction: column;
+                height: auto;
+                padding: 18px;
+                align-items: stretch;
+            }
+
+            .cards,
+            .zone-grid,
+            .form-grid,
+            .detail-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .title h1 {
+                font-size: 34px;
             }
         }
     </style>
@@ -638,812 +583,836 @@
     <div class="layout">
         <aside class="sidebar">
             <div class="brand">
-                <div class="brand-icon">🅿️</div>
+                <div class="brand-icon">P</div>
                 <div>
                     <h2>UTT Smart Parking System</h2>
                     <p>Admin Dashboard</p>
                 </div>
             </div>
 
-            <div class="menu-title">Quản trị</div>
+            <div class="nav">
+                <div class="nav-title">Quản trị</div>
+                <a class="active" href="admin-dashboard.html">📊 Tổng quan</a>
+                <a href="#active-section">🚗 Xe đang gửi</a>
+                <a href="#zone-section">🅿️ Theo khu</a>
+                <a href="#alert-section">🚨 Cảnh báo</a>
+                <a href="#quick-section">⚙️ Quản lý nhanh</a>
 
-            <button class="menu-item active" data-target="overview">📊 Tổng quan</button>
-            <button class="menu-item" data-target="activeVehicles">🚗 Xe đang gửi</button>
-            <button class="menu-item" data-target="zones">🅿️ Theo khu</button>
-            <button class="menu-item" data-target="alerts">🚨 Cảnh báo</button>
-            <button class="menu-item" data-target="manual">⚙️ Quản lý nhanh</button>
-
-            <div class="menu-title">Liên kết</div>
-
-            <button class="menu-item" onclick="goToPage('parking_layout.html')">📍 Parking Slot</button>
-            <button class="menu-item" onclick="goToPage('parking.html')">🗺️ Bản đồ bãi xe</button>
-
-            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+                <div class="nav-title">Liên kết</div>
+                <a href="parking.html">📍 Parking Slot</a>
+                <a href="parking_layout.html">🗺️ Bản đồ bãi xe</a>
+                <button class="logout" onclick="logout()">Đăng xuất</button>
+            </div>
         </aside>
 
         <main class="main">
             <header class="topbar">
-                <div class="search-box">
+                <div class="search">
                     <input id="searchInput" type="text" placeholder="Tìm mã ô, biển số, mã sinh viên..." />
-                    <button onclick="searchData()">🔍</button>
+                    <button type="button" onclick="applySearch()">🔍</button>
                 </div>
 
-                <div class="admin-profile">
-                    <div class="admin-avatar">A</div>
+                <div class="profile">
+                    <div class="avatar">A</div>
                     <div>
                         <strong>Admin UTT</strong>
-                        <span>Dữ liệu đồng bộ từ backend SQLite</span>
+                        <span>Dữ liệu đồng bộ từ Supabase</span>
                     </div>
                 </div>
             </header>
 
-            <div class="content">
-                <section class="page-section active" id="overview">
-                    <div class="page-title">
-                        <h1>Tổng quan bãi xe</h1>
-                        <p>
-                            Khi sinh viên gửi xe, dữ liệu sẽ xuất hiện tại đây.
-                            Khi admin ghi nhận xe ra, trạng thái sinh viên cũng được cập nhật.
-                        </p>
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">🅿️</div>
-                            <h3>Tổng ô</h3>
-                            <strong id="statTotal">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">✅</div>
-                            <h3>Còn trống</h3>
-                            <strong id="statEmpty">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">🚗</div>
-                            <h3>Đang có xe</h3>
-                            <strong id="statUsed">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">💰</div>
-                            <h3>Doanh thu hôm nay</h3>
-                            <strong id="statRevenue">0đ</strong>
-                        </div>
-                    </div>
-
-                    <div class="zone-cards" id="zoneCards"></div>
-
-                    <div class="panel">
-                        <h2>Xe đang gửi gần đây</h2>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Mã ô</th>
-                                    <th>Khu vực</th>
-                                    <th>Biển số</th>
-                                    <th>Mã sinh viên</th>
-                                    <th>Họ tên</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="recentTable">
-                                <tr>
-                                    <td colspan="6">Đang tải dữ liệu...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <section class="page-section" id="activeVehicles">
-                    <div class="page-title">
-                        <h1>Xe đang gửi trong bãi</h1>
-                        <p>
-                            Danh sách phương tiện đang có mặt trong bãi. Admin có thể xem chi tiết
-                            sinh viên sở hữu xe, số điện thoại liên hệ, email, loại xe, màu xe,
-                            khu gửi và mã ô.
-                        </p>
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon">🚗</div>
-                            <h3>Tổng xe đang gửi</h3>
-                            <strong id="activeTotal">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">🏍️</div>
-                            <h3>Xe máy / xe điện</h3>
-                            <strong id="activeBike">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">🚘</div>
-                            <h3>Ô tô</h3>
-                            <strong id="activeCar">0</strong>
-                        </div>
-
-                        <div class="stat-card">
-                            <div class="stat-icon">☎️</div>
-                            <h3>Có thông tin liên hệ</h3>
-                            <strong id="activeContact">0</strong>
-                        </div>
-                    </div>
-
-                    <div class="panel">
-                        <h2>Danh sách xe đang gửi</h2>
-
-                        <div class="action-row" style="margin-bottom:16px;">
-                            <button class="btn btn-blue" onclick="loadActiveVehicles()">Tải lại danh sách</button>
-                            <button class="btn btn-green" onclick="loadDashboard()">Đồng bộ toàn bộ admin</button>
-                        </div>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Mã ô</th>
-                                    <th>Khu vực</th>
-                                    <th>Biển số</th>
-                                    <th>Mã sinh viên</th>
-                                    <th>Họ tên</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Loại xe</th>
-                                    <th>Trạng thái</th>
-                                    <th>Chi tiết</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="activeVehicleTable">
-                                <tr>
-                                    <td colspan="9">Đang tải dữ liệu...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div id="activeVehicleMsg" class="message"></div>
-                    </div>
-                </section>
-
-                <section class="page-section" id="zones">
-                    <div class="page-title">
-                        <h1>Thống kê theo khu</h1>
-                        <p>
-                            Các khu gửi xe được đọc trực tiếp từ backend, đồng bộ với bãi xe sinh viên
-                            và trang Parking Slot.
-                        </p>
-                    </div>
-
-                    <div class="panel">
-                        <h2>Bảng trạng thái khu gửi xe</h2>
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Khu vực</th>
-                                    <th>Loại xe</th>
-                                    <th>Tổng ô</th>
-                                    <th>Còn trống</th>
-                                    <th>Đang có xe</th>
-                                    <th>Cảnh báo</th>
-                                    <th>Mật độ</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="zoneTable">
-                                <tr>
-                                    <td colspan="7">Đang tải dữ liệu...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <section class="page-section" id="alerts">
-                    <div class="page-title">
-                        <h1>Cảnh báo từ bãi xe</h1>
-                        <p>Các ô đang có trạng thái cảnh báo sẽ hiển thị tại đây.</p>
-                    </div>
-
-                    <div class="alert-list" id="alertList">
-                        <div class="alert-card">
-                            <div>
-                                <h3>Đang tải dữ liệu...</h3>
-                                <p>Vui lòng đợi hệ thống đọc dữ liệu cảnh báo.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="page-section" id="manual">
-                    <div class="page-title">
-                        <h1>Quản lý nhanh</h1>
-                        <p>
-                            Admin có thể ghi nhận xe vào hoặc xe ra. Các thao tác này ghi vào backend
-                            để các trang khác cập nhật cùng một dữ liệu.
-                        </p>
-                    </div>
-
-                    <div class="panel">
-                        <h2>Ghi nhận xe vào / xe ra</h2>
-
-                        <div class="form-grid">
-                            <select id="manualZone">
-                                <option value="">Đang tải khu...</option>
-                            </select>
-
-                            <input id="manualPlate" type="text" placeholder="Biển số xe" />
-
-                            <input id="manualStudentCode" type="text" placeholder="Mã sinh viên" />
-
-                            <input id="manualStudentName" type="text" placeholder="Họ tên sinh viên" />
-                        </div>
-
-                        <div class="action-row">
-                            <button class="btn btn-blue" onclick="vehicleIn()">Ghi nhận xe vào</button>
-                            <button class="btn btn-orange" onclick="vehicleOut()">Ghi nhận xe ra</button>
-                            <button class="btn btn-green" onclick="loadDashboard()">Tải lại dữ liệu</button>
-                            <button class="btn btn-dark" onclick="exportCSV()">Xuất CSV</button>
-                        </div>
-
-                        <div id="manualMsg" class="message"></div>
-                    </div>
-                </section>
+            <div class="title">
+                <h1>Tổng quan bãi xe</h1>
+                <p>
+                    Khi sinh viên gửi xe, dữ liệu sẽ xuất hiện tại đây.
+                    Admin có thể xem xe đang gửi, thông tin sinh viên, số điện thoại, khu gửi và mã ô.
+                </p>
             </div>
+
+            <div id="adminMsg" class="message"></div>
+
+            <section class="cards">
+                <div class="card">
+                    <div class="icon">🅿️</div>
+                    <h3>Tổng ô</h3>
+                    <strong id="totalSlots">0</strong>
+                </div>
+
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <h3>Còn trống</h3>
+                    <strong id="emptySlots">0</strong>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🚗</div>
+                    <h3>Đang có xe</h3>
+                    <strong id="usedSlots">0</strong>
+                </div>
+
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h3>Doanh thu hôm nay</h3>
+                    <strong id="todayRevenue">0đ</strong>
+                </div>
+            </section>
+
+            <section id="active-section" class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Danh sách xe đang gửi</h2>
+                        <p>Danh sách xe đang có trong bãi, đồng bộ từ các thao tác gửi xe của sinh viên.</p>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-blue" type="button" onclick="reloadAdmin()">Tải lại danh sách</button>
+                        <button class="btn btn-dark" type="button" onclick="exportCSV()">Xuất CSV</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã ô</th>
+                                <th>Khu vực</th>
+                                <th>Biển số</th>
+                                <th>Mã sinh viên</th>
+                                <th>Họ tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Loại xe</th>
+                                <th>Màu xe</th>
+                                <th>Trạng thái</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="activeTable">
+                            <tr>
+                                <td colspan="10">Đang tải dữ liệu...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="detailBox" class="detail-box"></div>
+            </section>
+
+            <section id="zone-section" class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Thống kê theo khu</h2>
+                        <p>Các khu gửi xe được đồng bộ với trang sinh viên và Parking Slot.</p>
+                    </div>
+                </div>
+
+                <div id="zoneGrid" class="zone-grid">
+                    <div class="zone-card">
+                        <h3>Đang tải dữ liệu...</h3>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alert-section" class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Cảnh báo từ bãi xe</h2>
+                        <p>Các ô có trạng thái cảnh báo sẽ hiển thị tại đây.</p>
+                    </div>
+                </div>
+
+                <div id="alertBox">
+                    <p>Đang tải dữ liệu cảnh báo...</p>
+                </div>
+            </section>
+
+            <section id="quick-section" class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Quản lý nhanh</h2>
+                        <p>Admin có thể ghi nhận xe vào hoặc xe ra. Dữ liệu sẽ đồng bộ sang các trang khác.</p>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <input id="manualPlate" type="text" placeholder="Biển số xe" />
+                    <input id="manualStudentCode" type="text" placeholder="Mã sinh viên" />
+                    <input id="manualStudentName" type="text" placeholder="Họ tên sinh viên" />
+                    <select id="manualZone">
+                        <option value="">Đang tải khu...</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-green" type="button" onclick="manualCheckin()">Ghi nhận xe vào</button>
+                    <button class="btn btn-orange" type="button" onclick="manualCheckout()">Ghi nhận xe ra</button>
+                    <button class="btn btn-blue" type="button" onclick="reloadAdmin()">Tải lại dữ liệu</button>
+                </div>
+            </section>
         </main>
     </div>
 
-    <div class="detail-modal" id="vehicleDetailModal">
-        <div class="detail-box">
-            <div class="detail-head">
-                <div>
-                    <h2 id="detailTitle">Chi tiết xe</h2>
-                    <p>Thông tin phương tiện, sinh viên và vị trí gửi xe.</p>
-                </div>
-
-                <button class="detail-close" onclick="closeVehicleDetail()">×</button>
-            </div>
-
-            <div class="detail-grid" id="vehicleDetailContent"></div>
-        </div>
-    </div>
-    <script src="api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        let dashboardData = null;
-        let allSlots = [];
-        let allZones = [];
+        const SUPABASE_URL = "https://znqtskbjbvayrqipamqa.supabase.co";
+        const SUPABASE_ANON_KEY = "PASTE_PUBLISHABLE_KEY_CUA_BAN_VAO_DAY";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         let activeVehicles = [];
+        let zones = [];
+        let allSlots = [];
 
-        if (guardAdmin()) {
-            loadDashboard();
+        function getCurrentUser() {
+            const keys = ["smart_utt_current_user", "currentUser", "utt_current_user"];
+
+            for (const key of keys) {
+                const raw = localStorage.getItem(key);
+                if (!raw) continue;
+
+                try {
+                    const user = JSON.parse(raw);
+                    if (user && user.role) return user;
+                } catch (error) {}
+            }
+
+            return null;
         }
 
-        document.querySelectorAll(".menu-item[data-target]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                switchSection(button.getAttribute("data-target"), button);
+        function guardAdmin() {
+            const user = getCurrentUser();
+
+            if (!user) {
+                window.location.href = "login_new.html";
+                return false;
+            }
+
+            if (user.role !== "admin") {
+                window.location.href = "student-home.html";
+                return false;
+            }
+
+            return true;
+        }
+
+        function logout() {
+            const ok = confirm("Bạn có chắc chắn muốn đăng xuất không?");
+            if (!ok) return;
+
+            localStorage.removeItem("smart_utt_current_user");
+            localStorage.removeItem("smart_utt_auth_token");
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("utt_current_user");
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("userRole");
+
+            window.location.href = "login_new.html";
+        }
+
+        function showMsg(id, text, ok = true) {
+            const box = document.getElementById(id);
+            if (!box) return;
+
+            box.textContent = text || "";
+            box.className = "message " + (ok ? "success" : "error");
+
+            if (!text) {
+                box.className = "message";
+            }
+        }
+
+        function money(value) {
+            return Number(value || 0).toLocaleString("vi-VN") + "đ";
+        }
+
+        function formatDateTime(value) {
+            if (!value) return "---";
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return value;
+            return date.toLocaleString("vi-VN");
+        }
+
+        function zoneName(zoneKey) {
+            const map = {
+                student1: "Khu gửi xe 1",
+                bike2: "Khu gửi xe 2",
+                bike3: "Khu gửi xe 3",
+                teacher: "Khu giáo viên/KTX",
+                car: "Khu ô tô"
+            };
+
+            return map[zoneKey] || zoneKey || "---";
+        }
+
+        function statusText(status) {
+            if (status === "empty") return "Còn trống";
+            if (status === "used") return "Đang có xe máy";
+            if (status === "car") return "Đang có ô tô";
+            if (status === "warning") return "Cảnh báo";
+            if (status === "parking") return "Đang gửi";
+
+            return status || "---";
+        }
+
+        function statusBadge(status) {
+            let className = "badge-empty";
+
+            if (status === "used" || status === "parking") className = "badge-used";
+            if (status === "car") className = "badge-car";
+            if (status === "warning") className = "badge-warning";
+
+            return `<span class="badge ${className}">${statusText(status)}</span>`;
+        }
+
+        async function loadSlots() {
+            const { data, error } = await supabaseClient
+                .from("parking_slots")
+                .select(`
+                    *,
+                    parking_zones(name, vehicle_type),
+                    vehicles(plate, vehicle_type, brand, color),
+                    app_users(full_name, student_code, username, phone, department)
+                `)
+                .order("slot_code", { ascending: true });
+
+            if (error) throw new Error(error.message);
+
+            allSlots = data || [];
+
+            activeVehicles = allSlots
+                .filter(function (slot) {
+                    return slot.status !== "empty";
+                })
+                .map(function (slot) {
+                    return {
+                        id: slot.id,
+                        slotCode: slot.slot_code,
+                        zoneKey: slot.zone_id,
+                        zoneName: slot.parking_zones?.name || zoneName(slot.zone_id),
+                        plate: slot.plate || slot.vehicles?.plate || "",
+                        studentCode: slot.app_users?.student_code || slot.app_users?.username || "",
+                        studentName: slot.app_users?.full_name || "",
+                        phone: slot.app_users?.phone || "",
+                        department: slot.app_users?.department || "",
+                        vehicleType: slot.vehicles?.vehicle_type || slot.parking_zones?.vehicle_type || "",
+                        brand: slot.vehicles?.brand || "",
+                        color: slot.vehicles?.color || "",
+                        status: slot.status,
+                        updatedAt: slot.updated_at
+                    };
+                });
+        }
+
+        async function loadZones() {
+            const { data: zoneRows, error: zoneError } = await supabaseClient
+                .from("parking_zones")
+                .select("*")
+                .order("name", { ascending: true });
+
+            if (zoneError) throw new Error(zoneError.message);
+
+            zones = (zoneRows || []).map(function (zone) {
+                const zoneSlots = allSlots.filter(function (slot) {
+                    return slot.zone_id === zone.id;
+                });
+
+                const used = zoneSlots.filter(function (slot) {
+                    return slot.status !== "empty";
+                }).length;
+
+                const total = zoneSlots.length || Number(zone.total_slots || 0);
+                const empty = total - used;
+                const warning = zoneSlots.filter(function (slot) {
+                    return slot.status === "warning";
+                }).length;
+
+                return {
+                    id: zone.id,
+                    name: zone.name,
+                    vehicleType: zone.vehicle_type,
+                    total: total,
+                    empty: empty,
+                    used: used,
+                    warning: warning
+                };
             });
-        });
+        }
 
-        function switchSection(targetId, button) {
-            document.querySelectorAll(".menu-item[data-target]").forEach(function (item) {
-                item.classList.remove("active");
-            });
+        async function loadRevenue() {
+            const { data, error } = await supabaseClient
+                .from("wallet_transactions")
+                .select("type, amount, created_at")
+                .eq("type", "CHECKIN");
 
-            if (button) {
-                button.classList.add("active");
+            if (error) return 0;
+
+            const today = new Date().toLocaleDateString("vi-VN");
+
+            return (data || [])
+                .filter(function (item) {
+                    return new Date(item.created_at).toLocaleDateString("vi-VN") === today;
+                })
+                .reduce(function (sum, item) {
+                    return sum + Math.abs(Number(item.amount || 0));
+                }, 0);
+        }
+
+        function renderStats(todayRevenue) {
+            const total = allSlots.length;
+            const used = activeVehicles.length;
+            const empty = total - used;
+
+            document.getElementById("totalSlots").textContent = total;
+            document.getElementById("emptySlots").textContent = empty;
+            document.getElementById("usedSlots").textContent = used;
+            document.getElementById("todayRevenue").textContent = money(todayRevenue);
+        }
+
+        function renderActiveTable() {
+            const table = document.getElementById("activeTable");
+            const keyword = String(document.getElementById("searchInput").value || "").toLowerCase().trim();
+
+            let rows = activeVehicles;
+
+            if (keyword) {
+                rows = rows.filter(function (item) {
+                    return [
+                        item.slotCode,
+                        item.zoneName,
+                        item.plate,
+                        item.studentCode,
+                        item.studentName,
+                        item.phone,
+                        item.vehicleType,
+                        item.color
+                    ].join(" ").toLowerCase().includes(keyword);
+                });
             }
 
-            document.querySelectorAll(".page-section").forEach(function (section) {
-                section.classList.remove("active");
-            });
-
-            document.getElementById(targetId).classList.add("active");
-        }
-
-        async function loadDashboard() {
-            try {
-                showMsg("manualMsg", "", true);
-
-                dashboardData = await apiGet("/api/admin/dashboard");
-
-                const slotsData = await apiGet("/api/slots");
-                allSlots = slotsData.slots || [];
-
-                allZones = dashboardData.zones || [];
-
-                renderStats();
-                renderZoneCards();
-                renderRecentTable();
-                renderZoneTable();
-                renderAlerts();
-                renderManualZoneSelect();
-                await loadActiveVehicles();
-            } catch (error) {
-                alert(error.message);
-            }
-        }
-        async function loadActiveVehicles() {
-            try {
-                const data = await apiGet("/api/admin/active-vehicles");
-
-                activeVehicles = data.vehicles || [];
-
-                renderActiveVehicleStats();
-                renderActiveVehicleTable();
-            } catch (error) {
-                const table = document.getElementById("activeVehicleTable");
-
-                if (table) {
-                    table.innerHTML = `
-                <tr>
-                    <td colspan="9">${error.message}</td>
-                </tr>
-            `;
-                }
-
-                const msg = document.getElementById("activeVehicleMsg");
-
-                if (msg) {
-                    showMsg("activeVehicleMsg", error.message, false);
-                }
-            }
-        }
-
-        function renderActiveVehicleStats() {
-            const total = activeVehicles.length;
-
-            const bike = activeVehicles.filter(function (item) {
-                return item.vehicleType === "Xe máy" || item.vehicleType === "Xe điện";
-            }).length;
-
-            const car = activeVehicles.filter(function (item) {
-                return item.vehicleType === "Ô tô";
-            }).length;
-
-            const contact = activeVehicles.filter(function (item) {
-                return item.phone && item.phone !== "Chưa có số điện thoại";
-            }).length;
-
-            const activeTotal = document.getElementById("activeTotal");
-            const activeBike = document.getElementById("activeBike");
-            const activeCar = document.getElementById("activeCar");
-            const activeContact = document.getElementById("activeContact");
-
-            if (activeTotal) activeTotal.textContent = total;
-            if (activeBike) activeBike.textContent = bike;
-            if (activeCar) activeCar.textContent = car;
-            if (activeContact) activeContact.textContent = contact;
-        }
-
-        function renderActiveVehicleTable() {
-            const table = document.getElementById("activeVehicleTable");
-
-            if (!table) {
-                return;
-            }
-
-            if (!activeVehicles || activeVehicles.length === 0) {
-                table.innerHTML = `
-            <tr>
-                <td colspan="9">Hiện chưa có xe nào đang gửi trong bãi.</td>
-            </tr>
-        `;
-                return;
-            }
-
-            table.innerHTML = activeVehicles.map(function (item, index) {
-                return `
-            <tr>
-                <td><strong>${item.slotCode || "---"}</strong></td>
-                <td>${item.zoneName || "---"}</td>
-                <td><strong>${item.plate || "---"}</strong></td>
-                <td>${item.studentCode || "---"}</td>
-                <td>${item.studentName || "---"}</td>
-                <td>${item.phone || "---"}</td>
-                <td>${item.vehicleType || "---"}</td>
-                <td>${statusBadge(item.status)}</td>
-                <td>
-                    <button class="btn btn-blue" onclick="openVehicleDetail(${index})">
-                        Xem chi tiết
-                    </button>
-                </td>
-            </tr>
-        `;
-            }).join("");
-        }
-
-        function openVehicleDetail(index) {
-            const item = activeVehicles[index];
-
-            if (!item) {
-                alert("Không tìm thấy thông tin xe.");
-                return;
-            }
-
-            document.getElementById("detailTitle").textContent = "Chi tiết xe " + (item.plate || "");
-
-            document.getElementById("vehicleDetailContent").innerHTML = `
-        <div class="detail-item">
-            <span>Biển số xe</span>
-            <strong>${item.plate || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Trạng thái</span>
-            <strong>${statusText(item.status)}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Mã sinh viên</span>
-            <strong>${item.studentCode || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Họ tên sinh viên</span>
-            <strong>${item.studentName || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Số điện thoại liên hệ</span>
-            <strong>${item.phone || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Email</span>
-            <strong>${item.email || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Loại xe</span>
-            <strong>${item.vehicleType || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Hãng xe</span>
-            <strong>${item.brand || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Màu xe</span>
-            <strong>${item.color || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Số dư ví sinh viên</span>
-            <strong>${money(item.balance || 0)}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Khu gửi xe</span>
-            <strong>${item.zoneName || "---"}</strong>
-        </div>
-
-        <div class="detail-item">
-            <span>Mã ô gửi xe</span>
-            <strong>${item.slotCode || "---"}</strong>
-        </div>
-
-        <div class="detail-item full">
-            <span>Thời gian cập nhật</span>
-            <strong>${item.updatedAt || "---"}</strong>
-        </div>
-    `;
-
-            document.getElementById("vehicleDetailModal").classList.add("active");
-        }
-
-        function closeVehicleDetail() {
-            document.getElementById("vehicleDetailModal").classList.remove("active");
-        }
-
-        function renderStats() {
-            const stats = dashboardData.stats || {};
-
-            document.getElementById("statTotal").textContent = stats.totalSlots || 0;
-            document.getElementById("statEmpty").textContent = stats.emptySlots || 0;
-            document.getElementById("statUsed").textContent = stats.usedSlots || 0;
-            document.getElementById("statRevenue").textContent = money(stats.todayRevenue || 0);
-        }
-
-        function renderZoneCards() {
-            const zoneCards = document.getElementById("zoneCards");
-
-            if (!allZones || allZones.length === 0) {
-                zoneCards.innerHTML = `
-                    <div class="zone-card">
-                        <h3>Chưa có dữ liệu khu</h3>
-                    </div>
-                `;
-                return;
-            }
-
-            zoneCards.innerHTML = allZones.map(function (zone) {
-                const zoneKey = zone.zoneKey || zone.zone_key;
-                const zoneName = zone.zoneName || zone.zone_name || zone.name;
-                const vehicleType = zone.vehicleType || zone.vehicle_type;
-                const empty = zone.emptySlots || zone.availableSlots || 0;
-                const used = zone.usedSlots || zone.occupiedSlots || 0;
-
-                return `
-                    <div class="zone-card" onclick="window.location.href='parking_layout.html?zone=${zoneKey}'">
-                        <h3>${vehicleType === "Ô tô" ? "🚗" : "🏍️"} ${zoneName}</h3>
-                        <p>${vehicleType} · Mật độ ${zone.density || 0}%</p>
-
-                        <div class="zone-mini">
-                            <div>
-                                <span>Còn trống</span>
-                                <strong>${empty}</strong>
-                            </div>
-
-                            <div>
-                                <span>Có xe</span>
-                                <strong>${used}</strong>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join("");
-        }
-
-        function renderRecentTable() {
-            const table = document.getElementById("recentTable");
-            const recent = dashboardData.recent || [];
-
-            if (!recent || recent.length === 0) {
+            if (!rows.length) {
                 table.innerHTML = `
                     <tr>
-                        <td colspan="6">Hiện chưa có xe nào trong bãi.</td>
+                        <td colspan="10">Chưa có xe nào đang gửi hoặc không tìm thấy kết quả phù hợp.</td>
                     </tr>
                 `;
                 return;
             }
 
-            table.innerHTML = recent.map(function (item) {
+            table.innerHTML = rows.map(function (item, index) {
                 return `
                     <tr>
-                        <td>${item.slot_code || "---"}</td>
-                        <td>${item.zone_name || "---"}</td>
+                        <td>${item.slotCode || "---"}</td>
+                        <td>${item.zoneName || "---"}</td>
                         <td><strong>${item.plate || "---"}</strong></td>
-                        <td>${item.student_code || "---"}</td>
-                        <td>${item.student_name || "---"}</td>
+                        <td>${item.studentCode || "---"}</td>
+                        <td>${item.studentName || "---"}</td>
+                        <td>${item.phone || "---"}</td>
+                        <td>${item.vehicleType || "---"}</td>
+                        <td>${item.color || "---"}</td>
                         <td>${statusBadge(item.status)}</td>
+                        <td>
+                            <button class="btn btn-blue" type="button" onclick="showDetail(${index})">
+                                Xem
+                            </button>
+                        </td>
                     </tr>
                 `;
             }).join("");
         }
 
-        function renderZoneTable() {
-            const table = document.getElementById("zoneTable");
+        function renderZones() {
+            const grid = document.getElementById("zoneGrid");
 
-            if (!allZones || allZones.length === 0) {
-                table.innerHTML = `
-                    <tr>
-                        <td colspan="7">Chưa có dữ liệu khu gửi xe.</td>
-                    </tr>
+            if (!zones.length) {
+                grid.innerHTML = `
+                    <div class="zone-card">
+                        <h3>Chưa có dữ liệu khu gửi xe</h3>
+                    </div>
                 `;
                 return;
             }
 
-            table.innerHTML = allZones.map(function (zone) {
-                const zoneName = zone.zoneName || zone.zone_name || zone.name;
-                const vehicleType = zone.vehicleType || zone.vehicle_type;
+            grid.innerHTML = zones.map(function (zone) {
+                const density = zone.total > 0 ? Math.round((zone.used / zone.total) * 100) : 0;
 
                 return `
-                    <tr>
-                        <td>${zoneName}</td>
-                        <td>${vehicleType}</td>
-                        <td>${zone.totalSlots || 0}</td>
-                        <td>${zone.emptySlots || zone.availableSlots || 0}</td>
-                        <td>${zone.usedSlots || zone.occupiedSlots || 0}</td>
-                        <td>${zone.warningSlots || 0}</td>
-                        <td>${zone.density || 0}%</td>
-                    </tr>
+                    <div class="zone-card">
+                        <h3>${zone.vehicleType === "Ô tô" ? "🚗" : "🏍️"} ${zone.name}</h3>
+                        <p>Loại xe: <strong>${zone.vehicleType}</strong></p>
+                        <p>Tổng ô: <strong>${zone.total}</strong></p>
+                        <p>Còn trống: <strong>${zone.empty}</strong></p>
+                        <p>Đang có xe: <strong>${zone.used}</strong></p>
+                        <p>Cảnh báo: <strong>${zone.warning}</strong></p>
+                        <div class="progress">
+                            <span style="width:${Math.max(density, 3)}%;"></span>
+                        </div>
+                        <p>Mật độ: <strong>${density}%</strong></p>
+                    </div>
                 `;
             }).join("");
+
+            const manualZone = document.getElementById("manualZone");
+            manualZone.innerHTML = zones
+                .filter(function (zone) {
+                    return zone.empty > 0;
+                })
+                .map(function (zone) {
+                    return `<option value="${zone.id}">${zone.name} - còn ${zone.empty} chỗ</option>`;
+                })
+                .join("");
         }
 
         function renderAlerts() {
-            const alertList = document.getElementById("alertList");
-            const alerts = dashboardData.alerts || [];
+            const box = document.getElementById("alertBox");
 
-            if (!alerts || alerts.length === 0) {
-                alertList.innerHTML = `
-                    <div class="alert-card">
-                        <div>
-                            <h3>Không có cảnh báo</h3>
-                            <p>Hiện tại không có ô nào đang ở trạng thái cảnh báo.</p>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-
-            alertList.innerHTML = alerts.map(function (item) {
-                return `
-                    <div class="alert-card">
-                        <div>
-                            <h3>${item.slot_code} - ${item.zone_name}</h3>
-                            <p>
-                                Biển số: <strong>${item.plate || "---"}</strong>.
-                                Ghi chú: ${item.note || "Cần admin kiểm tra."}
-                            </p>
-                        </div>
-
-                        <button class="btn btn-green" onclick="resolveAlert('${item.slot_code}')">
-                            Đã xử lý
-                        </button>
-                    </div>
-                `;
-            }).join("");
-        }
-
-        function renderManualZoneSelect() {
-            const select = document.getElementById("manualZone");
-
-            if (!allZones || allZones.length === 0) {
-                select.innerHTML = `
-                    <option value="">Chưa có dữ liệu khu</option>
-                `;
-                return;
-            }
-
-            select.innerHTML = allZones.map(function (zone) {
-                const zoneKey = zone.zoneKey || zone.zone_key;
-                const zoneName = zone.zoneName || zone.zone_name || zone.name;
-                const empty = zone.emptySlots || zone.availableSlots || 0;
-
-                return `
-                    <option value="${zoneKey}">
-                        ${zoneName} - còn ${empty} chỗ
-                    </option>
-                `;
-            }).join("");
-        }
-
-        function searchData() {
-            const keyword = document.getElementById("searchInput").value.trim().toUpperCase();
-
-            if (!keyword) {
-                alert("Vui lòng nhập mã ô, biển số hoặc mã sinh viên!");
-                return;
-            }
-
-            const found = allSlots.find(function (slot) {
-                return String(slot.slotCode || "").toUpperCase().includes(keyword)
-                    || String(slot.slot_code || "").toUpperCase().includes(keyword)
-                    || String(slot.plate || "").toUpperCase().includes(keyword)
-                    || String(slot.studentCode || "").toUpperCase().includes(keyword)
-                    || String(slot.student_code || "").toUpperCase().includes(keyword)
-                    || String(slot.studentName || "").toUpperCase().includes(keyword)
-                    || String(slot.student_name || "").toUpperCase().includes(keyword);
+            const alerts = allSlots.filter(function (slot) {
+                return slot.status === "warning";
             });
 
-            if (!found) {
-                alert("Không tìm thấy dữ liệu phù hợp!");
+            if (!alerts.length) {
+                box.innerHTML = `
+                    <div class="zone-card">
+                        <h3>✅ Không có cảnh báo</h3>
+                        <p>Hiện chưa phát hiện ô gửi xe có trạng thái cảnh báo.</p>
+                    </div>
+                `;
                 return;
             }
 
-            alert(
-                "Tìm thấy:\n" +
-                "Mã ô: " + (found.slotCode || found.slot_code) + "\n" +
-                "Khu: " + (found.zoneName || found.zone_name) + "\n" +
-                "Biển số: " + (found.plate || "---") + "\n" +
-                "Mã sinh viên: " + (found.studentCode || found.student_code || "---") + "\n" +
-                "Trạng thái: " + statusText(found.status)
-            );
+            box.innerHTML = alerts.map(function (slot) {
+                return `
+                    <div class="zone-card">
+                        <h3>🚨 ${slot.slot_code}</h3>
+                        <p>Khu vực: <strong>${slot.parking_zones?.name || zoneName(slot.zone_id)}</strong></p>
+                        <p>Biển số: <strong>${slot.plate || "---"}</strong></p>
+                    </div>
+                `;
+            }).join("");
         }
 
-        async function vehicleIn() {
-            const zoneKey = document.getElementById("manualZone").value;
-            const plate = document.getElementById("manualPlate").value.trim().toUpperCase();
-            const studentCode = document.getElementById("manualStudentCode").value.trim().toUpperCase();
-            const studentName = document.getElementById("manualStudentName").value.trim();
+        function showDetail(index) {
+            const item = activeVehicles[index];
+            const box = document.getElementById("detailBox");
 
-            if (!zoneKey) {
-                showMsg("manualMsg", "Vui lòng chọn khu gửi xe.", false);
-                return;
-            }
+            if (!item) return;
 
-            if (!plate) {
-                showMsg("manualMsg", "Vui lòng nhập biển số xe.", false);
-                return;
-            }
+            box.className = "detail-box show";
+            box.innerHTML = `
+                <h3>Chi tiết xe ${item.plate || "---"}</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span>Biển số</span>
+                        <strong>${item.plate || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Mã sinh viên</span>
+                        <strong>${item.studentCode || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Họ tên</span>
+                        <strong>${item.studentName || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Số điện thoại</span>
+                        <strong>${item.phone || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Loại xe</span>
+                        <strong>${item.vehicleType || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Màu xe</span>
+                        <strong>${item.color || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Khu vực</span>
+                        <strong>${item.zoneName || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Mã ô</span>
+                        <strong>${item.slotCode || "---"}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Cập nhật</span>
+                        <strong>${formatDateTime(item.updatedAt)}</strong>
+                    </div>
+                </div>
+            `;
 
+            box.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        async function reloadAdmin() {
             try {
-                const data = await apiPost("/api/vehicle/in", {
-                    zoneKey: zoneKey,
-                    plate: plate,
-                    studentCode: studentCode,
-                    studentName: studentName
-                });
+                showMsg("adminMsg", "Đang tải dữ liệu admin...", true);
 
-                showMsg(
-                    "manualMsg",
-                    data.message + ". Ô gửi xe: " + data.slotCode,
-                    true
-                );
+                await loadSlots();
+                await loadZones();
+
+                const revenue = await loadRevenue();
+
+                renderStats(revenue);
+                renderActiveTable();
+                renderZones();
+                renderAlerts();
+
+                showMsg("adminMsg", "Dữ liệu admin đã được đồng bộ từ Supabase.", true);
+            } catch (error) {
+                console.error(error);
+                showMsg("adminMsg", error.message || "Không tải được dữ liệu admin.", false);
+            }
+        }
+
+        function applySearch() {
+            renderActiveTable();
+        }
+
+        async function manualCheckin() {
+            try {
+                const plate = document.getElementById("manualPlate").value.trim().toUpperCase();
+                const studentCode = document.getElementById("manualStudentCode").value.trim();
+                const studentName = document.getElementById("manualStudentName").value.trim() || "Sinh viên";
+                const zoneId = document.getElementById("manualZone").value;
+
+                if (!plate || !studentCode || !zoneId) {
+                    showMsg("adminMsg", "Vui lòng nhập biển số, mã sinh viên và chọn khu gửi xe.", false);
+                    return;
+                }
+
+                let { data: user, error: userFindError } = await supabaseClient
+                    .from("app_users")
+                    .select("*")
+                    .eq("username", studentCode)
+                    .maybeSingle();
+
+                if (userFindError) throw new Error(userFindError.message);
+
+                if (!user) {
+                    const { data: newUser, error: createUserError } = await supabaseClient
+                        .from("app_users")
+                        .insert({
+                            username: studentCode,
+                            password_hash: "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+                            role: "student",
+                            full_name: studentName,
+                            student_code: studentCode,
+                            phone: "0900000000",
+                            department: "Chưa cập nhật"
+                        })
+                        .select()
+                        .single();
+
+                    if (createUserError) throw new Error(createUserError.message);
+
+                    user = newUser;
+
+                    await supabaseClient
+                        .from("wallets")
+                        .insert({
+                            user_id: user.id,
+                            balance: 50000
+                        });
+                }
+
+                let { data: vehicle, error: vehicleFindError } = await supabaseClient
+                    .from("vehicles")
+                    .select("*")
+                    .eq("plate", plate)
+                    .maybeSingle();
+
+                if (vehicleFindError) throw new Error(vehicleFindError.message);
+
+                if (!vehicle) {
+                    const { data: newVehicle, error: createVehicleError } = await supabaseClient
+                        .from("vehicles")
+                        .insert({
+                            user_id: user.id,
+                            plate: plate,
+                            vehicle_type: zoneId === "car" ? "Ô tô" : "Xe máy",
+                            brand: "",
+                            color: "",
+                            status: "outside"
+                        })
+                        .select()
+                        .single();
+
+                    if (createVehicleError) throw new Error(createVehicleError.message);
+
+                    vehicle = newVehicle;
+                }
+
+                if (vehicle.status === "parking") {
+                    showMsg("adminMsg", "Xe này đang được gửi trong bãi.", false);
+                    return;
+                }
+
+                const { data: slot, error: slotError } = await supabaseClient
+                    .from("parking_slots")
+                    .select("*")
+                    .eq("zone_id", zoneId)
+                    .eq("status", "empty")
+                    .order("slot_code", { ascending: true })
+                    .limit(1)
+                    .single();
+
+                if (slotError || !slot) {
+                    throw new Error("Khu này không còn ô trống.");
+                }
+
+                const slotStatus = zoneId === "car" ? "car" : "used";
+
+                await supabaseClient
+                    .from("parking_slots")
+                    .update({
+                        status: slotStatus,
+                        user_id: user.id,
+                        vehicle_id: vehicle.id,
+                        plate: plate,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq("id", slot.id);
+
+                await supabaseClient
+                    .from("vehicles")
+                    .update({
+                        user_id: user.id,
+                        status: "parking",
+                        zone_id: zoneId,
+                        slot_code: slot.slot_code,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq("id", vehicle.id);
+
+                await supabaseClient
+                    .from("parking_sessions")
+                    .insert({
+                        user_id: user.id,
+                        vehicle_id: vehicle.id,
+                        zone_id: zoneId,
+                        slot_id: slot.id,
+                        plate: plate,
+                        fee: zoneId === "car" ? 5000 : 3000,
+                        status: "active"
+                    });
+
+                showMsg("adminMsg", "Đã ghi nhận xe vào bãi thành công.", true);
 
                 document.getElementById("manualPlate").value = "";
                 document.getElementById("manualStudentCode").value = "";
                 document.getElementById("manualStudentName").value = "";
 
-                await loadDashboard();
+                await reloadAdmin();
             } catch (error) {
-                showMsg("manualMsg", error.message, false);
+                console.error(error);
+                showMsg("adminMsg", error.message || "Không ghi nhận được xe vào.", false);
             }
         }
 
-        async function vehicleOut() {
-            const plate = document.getElementById("manualPlate").value.trim().toUpperCase()
-                || document.getElementById("searchInput").value.trim().toUpperCase();
-
-            if (!plate) {
-                showMsg("manualMsg", "Vui lòng nhập biển số xe vào ô biển số hoặc ô tìm kiếm.", false);
-                return;
-            }
-
+        async function manualCheckout() {
             try {
-                const data = await apiPost("/api/vehicle/out", {
-                    plate: plate
-                });
+                const plate = document.getElementById("manualPlate").value.trim().toUpperCase();
 
-                showMsg("manualMsg", data.message, true);
+                if (!plate) {
+                    showMsg("adminMsg", "Vui lòng nhập biển số xe cần ghi nhận ra.", false);
+                    return;
+                }
 
-                document.getElementById("manualPlate").value = "";
+                const { data: vehicle, error: vehicleError } = await supabaseClient
+                    .from("vehicles")
+                    .select("*")
+                    .eq("plate", plate)
+                    .maybeSingle();
 
-                await loadDashboard();
+                if (vehicleError) throw new Error(vehicleError.message);
+
+                if (!vehicle) {
+                    showMsg("adminMsg", "Không tìm thấy xe này.", false);
+                    return;
+                }
+
+                const { data: session, error: sessionError } = await supabaseClient
+                    .from("parking_sessions")
+                    .select("*")
+                    .eq("vehicle_id", vehicle.id)
+                    .eq("status", "active")
+                    .maybeSingle();
+
+                if (sessionError) throw new Error(sessionError.message);
+
+                if (!session) {
+                    showMsg("adminMsg", "Xe này không có lượt gửi đang hoạt động.", false);
+                    return;
+                }
+
+                await supabaseClient
+                    .from("parking_slots")
+                    .update({
+                        status: "empty",
+                        user_id: null,
+                        vehicle_id: null,
+                        plate: null,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq("id", session.slot_id);
+
+                await supabaseClient
+                    .from("vehicles")
+                    .update({
+                        status: "outside",
+                        zone_id: null,
+                        slot_code: null,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq("id", vehicle.id);
+
+                await supabaseClient
+                    .from("parking_sessions")
+                    .update({
+                        status: "closed",
+                        checkout_at: new Date().toISOString()
+                    })
+                    .eq("id", session.id);
+
+                showMsg("adminMsg", "Đã ghi nhận xe ra khỏi bãi.", true);
+
+                await reloadAdmin();
             } catch (error) {
-                showMsg("manualMsg", error.message, false);
-            }
-        }
-
-        async function resolveAlert(slotCode) {
-            try {
-                const data = await apiPost("/api/alerts/" + encodeURIComponent(slotCode) + "/resolve", {});
-
-                alert(data.message || "Đã xử lý cảnh báo.");
-
-                await loadDashboard();
-            } catch (error) {
-                alert(error.message);
+                console.error(error);
+                showMsg("adminMsg", error.message || "Không ghi nhận được xe ra.", false);
             }
         }
 
         function exportCSV() {
-            if (!allSlots || allSlots.length === 0) {
-                showMsg("manualMsg", "Chưa có dữ liệu để xuất CSV.", false);
-                return;
-            }
-
             const headers = [
                 "Mã ô",
                 "Khu vực",
-                "Loại xe",
-                "Trạng thái",
                 "Biển số",
                 "Mã sinh viên",
                 "Họ tên",
-                "Ghi chú"
+                "Số điện thoại",
+                "Loại xe",
+                "Màu xe",
+                "Trạng thái"
             ];
 
-            const rows = allSlots.map(function (slot) {
+            const rows = activeVehicles.map(function (item) {
                 return [
-                    slot.slotCode || slot.slot_code || "",
-                    slot.zoneName || slot.zone_name || "",
-                    slot.vehicleType || slot.vehicle_type || "",
-                    statusText(slot.status),
-                    slot.plate || "",
-                    slot.studentCode || slot.student_code || "",
-                    slot.studentName || slot.student_name || "",
-                    slot.note || ""
+                    item.slotCode,
+                    item.zoneName,
+                    item.plate,
+                    item.studentCode,
+                    item.studentName,
+                    item.phone,
+                    item.vehicleType,
+                    item.color,
+                    statusText(item.status)
                 ];
             });
 
-            const csvContent = [headers, ...rows]
+            const csv = [headers, ...rows]
                 .map(function (row) {
                     return row.map(function (value) {
                         return '"' + String(value || "").replace(/"/g, '""') + '"';
@@ -1451,7 +1420,7 @@
                 })
                 .join("\n");
 
-            const blob = new Blob(["\uFEFF" + csvContent], {
+            const blob = new Blob(["\uFEFF" + csv], {
                 type: "text/csv;charset=utf-8;"
             });
 
@@ -1459,17 +1428,21 @@
             const link = document.createElement("a");
 
             link.href = url;
-            link.download = "du-lieu-admin-bai-xe-utt.csv";
+            link.download = "danh-sach-xe-dang-gui.csv";
             link.click();
 
             URL.revokeObjectURL(url);
         }
 
-        function goToPage(page) {
-            window.location.href = page;
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!guardAdmin()) return;
+
+            reloadAdmin();
+
+            const searchInput = document.getElementById("searchInput");
+            searchInput.addEventListener("input", applySearch);
+        });
     </script>
-    <script src="navigation-fix.js?v=1"></script>
 </body>
 
 </html>
