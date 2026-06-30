@@ -178,9 +178,28 @@
             return vehicle.vehicle_type || vehicle.vehicleType || "Xe máy";
         }
 
-        function getVehicleZone(vehicle) {
-            return vehicle.zone_name || vehicle.zoneName || vehicle.zone_id || vehicle.zoneId || "---";
-        }
+        function getZoneDisplayName(zoneKey) {
+    const zoneMap = {
+        student1: "Khu gửi xe 1",
+        bike2: "Khu gửi xe 2",
+        bike3: "Khu gửi xe 3",
+        teacher: "Khu giáo viên/KTX",
+        car: "Khu ô tô"
+    };
+
+    return zoneMap[zoneKey] || zoneKey || "---";
+}
+
+function getVehicleZone(vehicle) {
+    const rawZone =
+        vehicle.zone_name ||
+        vehicle.zoneName ||
+        vehicle.zone_id ||
+        vehicle.zoneId ||
+        "";
+
+    return getZoneDisplayName(rawZone);
+}
 
         function getVehicleSlot(vehicle) {
             return vehicle.slot_code || vehicle.slotCode || "---";
